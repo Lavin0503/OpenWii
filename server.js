@@ -88,7 +88,7 @@ const server = tls ? https.createServer(tls, app) : http.createServer(app);
 const scheme = tls ? 'https' : 'http';
 
 const lanIp = localAddresses()[0] || 'localhost';
-const controllerUrl = `${scheme}://${lanIp}:${PORT}/controller`;
+const publicBase = process.env.PUBLIC_URL || process.env.RENDER_EXTERNAL_URL; const controllerUrl = publicBase   ? `${publicBase.replace(/\/$/, '')}/controller`   : `${scheme}://${lanIp}:${PORT}/controller`;
 
 // The PC client fetches this to render a scannable join code.
 app.get('/api/pairing', async (_req, res) => {
